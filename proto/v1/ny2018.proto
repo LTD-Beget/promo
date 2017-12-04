@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package beget.promo.v1.ny2018;
+import "google/api/annotations.proto";
+
+service Ny2018Service {
+    rpc getinfo (GetInfoRequest) returns (GetInfoResponse) {
+        option (google.api.http) = {
+            get: "/v1/promo/ny2018/info"
+        };
+    }
+    rpc getGift (GetGiftRequest) returns (GetGiftResponse) {
+        option (google.api.http) = {
+            get: "/v1/promo/ny2018/gift"
+        };
+    }
+}
+
+message GetGiftInfoRequest {
+}
+
+message GetInfoResponse {
+    oneof gift_info {
+        Unavailable unavailable = 1;
+        Available available = 2;
+        Presented presented = 3;
+    }
+
+    message Unavailable {
+
+    }
+
+    message Available {
+        //....
+    }
+
+    message Presented {
+        string gift_name = 1;
+    }
+}
+
+message GetGiftRequest {
+
+}
+
+message GetGiftResponse {
+    oneof result {
+        Gift gift = 1;
+        Error error = 2;
+    }
+
+    message Gift {
+        string gift_name = 1;
+    }
+
+    message Error {
+        Code code = 1;
+        string message = 2;
+
+        enum Code {
+            _ = 0;
+            ALREADY_TAKEN = 1;
+            UNAVAILABLE = 2;
+        }
+    }
+}
