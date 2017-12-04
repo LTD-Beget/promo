@@ -50,7 +50,7 @@ message GetGiftResponse {
     }
 
     message Gift {
-        string gift_name = 1;
+        string name = 1;
     }
 
     message Error {
