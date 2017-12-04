@@ -4,7 +4,7 @@ package beget.promo.v1.ny2018;
 import "google/api/annotations.proto";
 
 service Ny2018Service {
-    rpc getinfo (GetInfoRequest) returns (GetInfoResponse) {
+    rpc getInfo (GetInfoRequest) returns (GetInfoResponse) {
         option (google.api.http) = {
             get: "/v1/promo/ny2018/info"
         };
@@ -16,7 +16,7 @@ service Ny2018Service {
     }
 }
 
-message GetGiftInfoRequest {
+message GetInfoRequest {
 }
 
 message GetInfoResponse {
