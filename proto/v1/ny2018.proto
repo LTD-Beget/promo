@@ -72,9 +72,6 @@ message GetGiftResponse {
 
 
 message AddGiftInfoRequest {
-}
-
-message AddGiftInfoResponse {
     PostInfo post_info = 1;
 
     oneof gift_info {
@@ -95,5 +92,15 @@ message AddGiftInfoResponse {
     }
 
     message OctopusInfo {
+    }
+}
+
+message AddGiftInfoResponse {
+    Result result = 1;
+
+    enum Result {
+        _ = 0;
+        SUCCESS = 1;
+        ALREADY_ADDED = 2;
     }
 }
