@@ -85,7 +85,7 @@ message AddGiftInfoRequest {
         string address = 2;
         string city = 3;
         string region = 4;
-        uint32 postal_code = 5;
+        string postal_code = 5;
     }
 
     message TShirtInfo {
