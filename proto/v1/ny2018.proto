@@ -102,5 +102,6 @@ message AddGiftInfoResponse {
         _ = 0;
         SUCCESS = 1;
         ALREADY_ADDED = 2;
+        GIFT_NOT_PRESENTED = 3;
     }
 }
