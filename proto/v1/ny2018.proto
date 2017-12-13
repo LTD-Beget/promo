@@ -17,6 +17,7 @@ service Ny2018Service {
     rpc addGiftInfo (AddGiftInfoRequest) returns (AddGiftInfoResponse) {
         option (google.api.http) = {
             post: "/v1/promo/ny2018/giftInfo"
+            body: "*"
         };
     }
 }
