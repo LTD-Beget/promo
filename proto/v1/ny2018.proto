@@ -14,6 +14,11 @@ service Ny2018Service {
             get: "/v1/promo/ny2018/gift"
         };
     }
+    rpc addGiftInfo (AddGiftInfoRequest) returns (AddGiftInfoResponse) {
+        option (google.api.http) = {
+            post: "/v1/promo/ny2018/giftInfo"
+        };
+    }
 }
 
 message GetInfoRequest {
@@ -62,5 +67,33 @@ message GetGiftResponse {
             ALREADY_TAKEN = 1;
             UNAVAILABLE = 2;
         }
+    }
+}
+
+
+message AddGiftInfoRequest {
+}
+
+message AddGiftInfoResponse {
+    PostInfo post_info = 1;
+
+    oneof gift_info {
+        TShirtInfo t_shirt_info = 2;
+        OctopusInfo octopus_info = 3;
+    }
+
+    message PostInfo {
+        string name = 1;
+        string address = 2;
+        string city = 3;
+        string region = 4;
+        uint32 postal_code = 5;
+    }
+
+    message TShirtInfo {
+        string size = 1;
+    }
+
+    message OctopusInfo {
     }
 }
