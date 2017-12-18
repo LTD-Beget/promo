@@ -32,16 +32,43 @@ message GetInfoResponse {
         Presented presented = 3;
     }
 
-    message Unavailable {
+    oneof plan_info {
+        Changeless changeless = 4; // нет и не было предложения
+        Offer offer = 5; // есть персональное предложение по смене тарифа!
+        Changed changed = 6; // тариф изменен по предложению
+    }
 
+    message Unavailable {
     }
 
     message Available {
-        //....
     }
 
     message Presented {
         string gift_name = 1;
+    }
+
+    message Changeless {
+    }
+
+    message Offer {
+        Plan old_plan = 1;
+        Plan new_plan = 2;
+        uint32 cost = 3;
+    }
+
+    message Changed {
+        Plan new_plan = 1;
+    }
+
+    message Plan {
+        string name = 1;
+        uint32 quota = 2;
+        uint32 site = 3;
+        uint32 cp = 4;
+        uint32 ftp = 5;
+        uint32 db = 6;
+        uint32 domain = 7;
     }
 }
 
