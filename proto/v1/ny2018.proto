@@ -54,7 +54,6 @@ message GetInfoResponse {
     message Offer {
         Plan old_plan = 1;
         Plan new_plan = 2;
-        uint32 cost = 3;
     }
 
     message Changed {
@@ -69,6 +68,7 @@ message GetInfoResponse {
         uint32 ftp = 5;
         uint32 db = 6;
         uint32 domain = 7;
+        uint32 cost = 8;
     }
 }
 
