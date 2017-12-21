@@ -70,6 +70,7 @@ message GetInfoResponse {
         uint32 db = 6;
         uint32 domain = 7;
         uint32 cost = 8;
+        uint32 mysql_cp = 9;
     }
 }
 
