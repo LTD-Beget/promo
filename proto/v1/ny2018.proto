@@ -55,6 +55,7 @@ message GetInfoResponse {
         Plan old_plan = 1;
         Plan new_plan = 2;
         uint32 cost = 3;
+        bool with_options = 4;
     }
 
     message Changed {
