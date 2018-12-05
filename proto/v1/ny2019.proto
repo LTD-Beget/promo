@@ -1,0 +1,112 @@
+syntax = "proto3";
+
+package beget.promo.v1.ny2019;
+import "google/api/annotations.proto";
+
+service Ny2019Service {
+    rpc getInfo (GetInfoRequest) returns (GetInfoResponse) {
+        option (google.api.http) = {
+            get: "/v1/promo/ny2019/info"
+        };
+    }
+    rpc getGift (GetGiftRequest) returns (GetGiftResponse) {
+        option (google.api.http) = {
+            get: "/v1/promo/ny2019/gift"
+        };
+    }
+    rpc addGiftInfo (AddGiftInfoRequest) returns (AddGiftInfoResponse) {
+        option (google.api.http) = {
+            post: "/v1/promo/ny2019/giftInfo"
+            body: "*"
+        };
+    }
+}
+
+message GetInfoRequest {
+}
+
+message GetInfoResponse {
+    oneof gift_info {
+        Unavailable unavailable = 1;
+        Available available = 2;
+        Presented presented = 3;
+    }
+
+    message Unavailable {
+    }
+
+    message Available {
+    }
+
+    message Presented {
+        string gift_name = 1;
+    }
+}
+
+message GetGiftRequest {
+
+}
+
+message GetGiftResponse {
+    oneof result {
+        Gift gift = 1;
+        Error error = 2;
+    }
+
+    message Gift {
+        string name = 1;
+    }
+
+    message Error {
+        Code code = 1;
+        string message = 2;
+
+        enum Code {
+            _ = 0;
+            ALREADY_TAKEN = 1;
+            UNAVAILABLE = 2;
+        }
+    }
+}
+
+
+message AddGiftInfoRequest {
+    PostInfo post_info = 1;
+
+    oneof gift_info {
+        TShirtInfo t_shirt_info = 2;
+        OctopusInfo octopus_info = 3;
+        HoodyInfo hoody_info = 4;
+    }
+
+    message PostInfo {
+        string name = 1;
+        string address = 2;
+        string city = 3;
+        string region = 4;
+        string postal_code = 5;
+    }
+
+    message TShirtInfo {
+        string size = 1;
+    }
+
+    message HoodyInfo {
+        string size = 1;
+    }
+
+    message OctopusInfo {
+    }
+}
+
+message AddGiftInfoResponse {
+    Result result = 1;
+
+    enum Result {
+        _ = 0;
+        SUCCESS = 1;
+        ALREADY_ADDED = 2;
+        GIFT_NOT_PRESENTED = 3;
+        EMPTY_REQUIRED_FIELDS = 4;
+    }
+}
