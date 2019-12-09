@@ -3,7 +3,7 @@ syntax = "proto3";
 package beget.promo.v1.ny2020;
 import "google/api/annotations.proto";
 
-service Ny2019Service {
+service Ny2020Service {
     rpc getPrediction (GetPredictionRequest) returns (GetPredictionResponse) {
         option (google.api.http) = {
             get: "/v1/promo/ny2020/prediction"
