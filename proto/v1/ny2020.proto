@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package beget.promo.v1.ny2020;
+import "google/api/annotations.proto";
+
+service Ny2019Service {
+    rpc getPrediction (GetPredictionRequest) returns (GetPredictionResponse) {
+        option (google.api.http) = {
+            get: "/v1/promo/ny2020/prediction"
+        };
+    }
+    rpc createPrediction (CreatePredictionRequest) returns (CreatePredictionResponse) {
+        option (google.api.http) = {
+            post: "/v1/promo/ny2020/prediction"
+            body: "*"
+        };
+    }
+    rpc updatePrediction (UpdatePredictionRequest) returns (UpdatePredictionResponse) {
+        option (google.api.http) = {
+            put: "/v1/promo/ny2020/prediction"
+            body: "*"
+        };
+    }
+    rpc getCashback (GetCashbackRequest) returns (GetCashbackResponse) {
+        option (google.api.http) = {
+            get: "/v1/promo/ny2020/cashback"
+        };
+    }
+}
+
+message GetPredictionRequest {
+}
+
+message GetPredictionResponse {
+    // 404 before creating
+    Prediction prediction = 1;
+}
+
+message CreatePredictionRequest {
+    string background = 1;
+}
+
+message CreatePredictionResponse {
+    Prediction prediction = 1;
+}
+
+message UpdatePredictionRequest {
+    string background = 1; // empty string for keep current
+    string share_link = 2;
+}
+
+message UpdatePredictionResponse {
+    Prediction prediction = 1;
+}
+
+message GetCashbackRequest {
+    float amount = 1; // not 0 for calculate
+}
+
+message GetCashbackResponse {
+    // 404 when prediction didn't got
+    Cashback cashback = 1;
+}
+
+
+message Prediction {
+    string id = 1;
+    string text = 2;
+    string background = 3;
+    string share_link = 4;
+}
+
+message Cashback {
+    uint32 percent = 1;
+    uint32 amount = 2; // not 0 if amount passed
+    bool active = 3; // false when already used
+}
