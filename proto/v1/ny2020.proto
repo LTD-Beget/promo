@@ -37,7 +37,6 @@ message GetPredictionResponse {
 }
 
 message CreatePredictionRequest {
-    string background = 1;
 }
 
 message CreatePredictionResponse {
@@ -45,11 +44,12 @@ message CreatePredictionResponse {
 }
 
 message UpdatePredictionRequest {
-    string background = 1; // empty string for keep current
+    string background = 1;
     string share_link = 2;
 }
 
 message UpdatePredictionResponse {
+    // 404 may be here
     Prediction prediction = 1;
 }
 
