@@ -65,8 +65,8 @@ message GetCashbackResponse {
 
 message Prediction {
     string id = 1;
-    string text = 2;
-    string background = 3;
+    string background = 2;
+    string type = 3;
     string share_link = 4;
 }
 
