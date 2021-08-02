@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package beget.promo.v1.beget12;
+import "google/api/annotations.proto";
+
+service Beget12Service {
+    rpc preready (PrereadyRequest) returns (PrereadyResponse) {
+        option (google.api.http) = {
+            post: "/v1/promo/beget12/preready"
+        };
+    }
+}
+
+message PrereadyRequest {
+}
+
+message PrereadyResponse {
+}
