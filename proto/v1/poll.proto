@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package beget.promo.v1.poll;
+import "google/api/annotations.proto";
+
+service PollService {
+  rpc get (GetPollRequest) returns (GetPollResponse) {
+    option (google.api.http) = {
+      get: "/v1/promo/poll/{id}"
+    };
+  }
+  rpc vote (VoteRequest) returns (VoteResponse) {
+    option (google.api.http) = {
+      post: "/v1/promo/poll/{id}/vote"
+      body: "*"
+    };
+  }
+}
+
+message GetPollRequest {
+  string id = 1;
+}
+
+message GetPollResponse {
+  Poll poll = 1;
+}
+
+message VoteRequest {
+  string id = 1;
+  repeated uint32 option_id = 2;
+}
+
+message VoteResponse {
+  oneof result {
+    Poll poll = 1;
+    Error error = 2;
+  }
+
+  message Error {
+    string message = 1;
+    ErrorCode code = 2;
+  }
+
+  enum ErrorCode {
+    _ = 0;
+    ALREADY_VOTED = 1;
+    INVALID_OPTION = 2;
+  }
+}
+
+message Poll {
+  string id = 1;
+  repeated Option option = 2;
+  message Option {
+    uint32 id = 1;
+    string name = 2;
+    uint32 votes = 3;
+    bool voted = 4;
+  }
+}
