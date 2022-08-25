@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package beget.promo.v1.cloud1ruble2022;
+import "google/api/annotations.proto";
+
+service Cloud1Ruble2022Service {
+  rpc init (InitPromoRequest) returns (InitPromoResponse) {
+    option (google.api.http) = {
+      post: "/v1/promo/cloud1ruble2022"
+      body: "*"
+    };
+  }
+}
+
+message InitPromoRequest {
+
+}
+
+message InitPromoResponse {
+
+}
