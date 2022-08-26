@@ -10,6 +10,12 @@ service Cloud1Ruble2022Service {
       body: "*"
     };
   }
+
+  rpc getInfo(GetInfoRequest) returns (GetInfoResponse) {
+    option (google.api.http) = {
+      get: "/v1/promo/cloud1ruble2022/info"
+    };
+  }
 }
 
 message InitPromoRequest {
@@ -18,4 +24,19 @@ message InitPromoRequest {
 
 message InitPromoResponse {
 
+}
+
+message GetInfoRequest {
+
+}
+
+message GetInfoResponse {
+  string start_date = 1;
+  string end_date = 2;
+  repeated CustomerDb database = 3;
+}
+
+message CustomerDb {
+  string name = 1;
+  int64 size = 2; // in mb
 }
