@@ -31,12 +31,12 @@ message GetInfoRequest {
 }
 
 message GetInfoResponse {
-  string start_date = 1;
-  string end_date = 2;
+  string start_date = 1; // дата в формате DD.MM.YYY
+  string end_date = 2;  // дата в формате DD.MM.YYY
   repeated CustomerDb database = 3;
 }
 
 message CustomerDb {
   string name = 1;
-  int64 size = 2; // in mb
+  int32 size = 2; // размер в МБ
 }
