@@ -19,7 +19,7 @@ service Cloud1Ruble2022Service {
 
   rpc getTransferingDb(GetTransferingDbRequest) returns (GetTransferingDbResponse) {
     option (google.api.http) = {
-      get: "/v1/promo/cloud1ruble2022/transfer"
+      get: "/v1/promo/cloud1ruble2022/transfering"
     };
   }
 }
