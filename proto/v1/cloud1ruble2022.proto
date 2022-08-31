@@ -29,7 +29,7 @@ message InitPromoRequest {
 }
 
 message InitPromoResponse {
-
+ string state = 1; // значение нотиса cloud1Ruble2022Promo
 }
 
 message GetInfoRequest {
