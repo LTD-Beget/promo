@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package beget.promo.v1.cloud1ruble2022;
+import "google/api/annotations.proto";
+
+service Cloud1Ruble2022Service {
+  rpc init (InitPromoRequest) returns (InitPromoResponse) {
+    option (google.api.http) = {
+      post: "/v1/promo/cloud1ruble2022"
+      body: "*"
+    };
+  }
+
+  rpc getInfo(GetInfoRequest) returns (GetInfoResponse) {
+    option (google.api.http) = {
+      get: "/v1/promo/cloud1ruble2022/info"
+    };
+  }
+
+  rpc getTransferingDb(GetTransferingDbRequest) returns (GetTransferingDbResponse) {
+    option (google.api.http) = {
+      get: "/v1/promo/cloud1ruble2022/transfering"
+    };
+  }
+}
+
+message InitPromoRequest {
+
+}
+
+message InitPromoResponse {
+ string state = 1; // значение нотиса cloud1Ruble2022Promo
+}
+
+message GetInfoRequest {
+
+}
+
+message GetInfoResponse {
+  string start_date = 1; // дата в формате DD.MM.YYY
+  string end_date = 2;  // дата в формате DD.MM.YYY
+  repeated CustomerDb database = 3;
+  bool has_db = 4;
+}
+
+message CustomerDb {
+  string name = 1;
+  int32 size = 2; // размер в МБ
+}
+
+message GetTransferingDbRequest {
+
+}
+
+message GetTransferingDbResponse {
+  repeated string database_uuid = 1;
+}
