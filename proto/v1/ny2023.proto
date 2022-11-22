@@ -16,7 +16,7 @@ service Ny2023Service {
         };
     }
 
-    rpc submitQuestForm (SubmitQuestFormRequest) returns (SubmitQuestFormResponse) {
+    rpc submitQuestLocation (SubmitQuestLocationRequest) returns (SubmitQuestLocationResponse) {
         option (google.api.http) = {
             post: "/v1/promo/ny2023/quest"
             body: "*"
@@ -54,12 +54,12 @@ message GetQuestStateResponse {
     QuestLocation current_location = 2;
 }
 
-message SubmitQuestFormRequest {
+message SubmitQuestLocationRequest {
     string location_id = 1;
     string answer = 2;
 }
 
-message SubmitQuestFormResponse {
+message SubmitQuestLocationResponse {
     oneof result {
         QuestLocation next_location = 1;
         Error error = 2;
