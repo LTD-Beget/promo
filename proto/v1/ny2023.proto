@@ -79,6 +79,7 @@ message SubmitQuestLocationResponse {
 
 message QuestLocation {
     string location_id = 1;
+    string title = 11;
     string description = 2;
     string image_url = 3;
 
