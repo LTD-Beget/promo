@@ -72,8 +72,7 @@ message SubmitQuestLocationResponse {
         enum Code {
             _ = 0;
             LOCATION_ID_MISMATCH = 1; // текущая локация не совпадает с той, для которой отправлен ответ
-            ANSWER_REQUIRED = 2; // необходим ответ на вопрос (нет дефолтного значения)
-            INVALID_CHOICE = 3; // номер ответа выходит за допустимый диапазон
+            INVALID_CHOICE = 2; // номер ответа выходит за допустимый диапазон
         }
     }
 }
@@ -83,16 +82,33 @@ message QuestLocation {
     string description = 2;
     string image_url = 3;
 
-    string visited_at = 4; // время перехода на локацию в формате RFC3399
-    string current_time = 5; // текущее время в формате RFC3339, чтобы рассчитать остаток таймера
-    int32 timer_seconds = 6; // на локации ограничено время на ответ, если пользователь не успел, по окончании нужно отправить пустой ответ автоматически
+    int32 elapsed_time_seconds = 4; // время, проведенное на текущей локации
+    int32 timer_seconds = 5; // если значение больше 0, на локации ограничено время на ответ
 
-    repeated string choice = 7;
-    QuestionType question_type = 8;
+    repeated string choice = 6; // deprecated
+    QuestionType question_type = 7;
+
+    oneof question {
+        ChoiceQuestion choice_question = 8;
+        TextQuestion text_question = 9;
+        BlitzQuestion blitz_question = 10;
+    }
 
     enum QuestionType {
         CHOICE = 0; // в качестве ответа нужно передать порядковый номер варианта (нумерация с 1)
         TEXT = 1; // пользователь сам должен ввести текст, он передается в качестве ответа "как есть"
+        BLITZ = 2; // в качестве ответа нужно передать все значения, объединённые через перенос строки (\n)
+    }
+
+    message ChoiceQuestion {
+        repeated string choice = 1;
+    }
+
+    message TextQuestion {
+    }
+
+    message BlitzQuestion {
+        repeated string question = 1;
     }
 }
 
