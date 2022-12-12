@@ -36,11 +36,7 @@ message GetInfoRequest {
 
 message GetInfoResponse {
     bool promo_available = 1;
-
-    bool quest_completed = 2; // квест завершён хотя бы один раз
     bool links_submitted = 3; // отправлено максимально возможное число ссылок
-    bool payment_completed = 4; // совершён платеж в рамках акции
-
     int32 discount_rate = 5; // скидка, полученная при прохождении квеста с учётом доп. заданий
 
     repeated SocialLink social_link = 6;
@@ -50,7 +46,6 @@ message GetQuestStateRequest {
 }
 
 message GetQuestStateResponse {
-    int32 attempts_left = 1;
     QuestLocation current_location = 2;
 }
 
