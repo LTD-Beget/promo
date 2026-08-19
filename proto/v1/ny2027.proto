@@ -97,10 +97,21 @@ message SubmitExerciseResponse {
 
   message ComponentError {
     ComponentType component_type = 1;
+    // Возможные тексты ошибок
+    // COMPONENT_TYPE_SERVER_COMPUTE - Недостаточно вычислительных мощностей
+    // COMPONENT_TYPE_NETWORK_DISK_SSD - Недостаточно сетевых дисков
+    // COMPONENT_TYPE_S3 - Недостаточно объектного хранилища (S3)
+    // COMPONENT_TYPE_DBAAS - Тариф управляемой БД слишком мал (или DBaaS вообще не подключён)
+    // COMPONENT_TYPE_BANDWIDTH - Недостаточно пропускной способности канала 
+    // COMPONENT_TYPE_BACKUPS Для - этого проекта обязательно резервное копирование
+    // COMPONENT_TYPE_CDN - Для этого проекта обязателен CDN
+    // COMPONENT_TYPE_IPV6 - Для этого проекта обязателен IPv6
+    // COMPONENT_TYPE_VPN_PRIVATE_NETWORK - Для этого проекта обязательна приватная сеть (VPN)
     string message = 2;
   }
 
   message Ddos {
+    // Идёт DDoS-атака! Компоненты, которые вы настроили, не смогли выдержать нагрузку
     string message = 1;
   }
 }
