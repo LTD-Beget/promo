@@ -40,7 +40,7 @@ message SubmitExerciseRequest {
   // DBaaS
   DBaaSConfig dbaas = 5;
   // Канал связи
-  ChannelConfig channel = 6;
+  BandwidthConfig bandwidth = 6;
   // CDN
   CDNConfig cdn = 7;
   // IPv6
@@ -68,7 +68,7 @@ message DBaaSConfig {
   DBaaSSize size = 1;
 }
 
-message ChannelConfig {
+message BandwidthConfig {
   uint32 bandwidth_mbps = 1;
 }
 
@@ -120,7 +120,7 @@ enum ComponentType {
   COMPONENT_TYPE_NETWORK_DISK_SSD = 2;        // Сетевые диски (SSD)
   COMPONENT_TYPE_S3 = 3;                      // S3
   COMPONENT_TYPE_DBAAS = 4;                   // DBaaS
-  COMPONENT_TYPE_CHANNEL = 5;                 // Канал связи
+  COMPONENT_TYPE_BANDWIDTH = 5;               // Канал связи
   COMPONENT_TYPE_CDN = 6;                     // CDN
   COMPONENT_TYPE_IPV6 = 7;                    // IPv6
   COMPONENT_TYPE_BACKUPS = 8;                 // Бэкапы
