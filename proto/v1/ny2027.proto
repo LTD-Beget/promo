@@ -1,0 +1,153 @@
+syntax = "proto3";
+
+package beget.promo.v1.ny2027;
+import "google/api/annotations.proto";
+
+// Игра «Конструктор инфраструктуры» новогодней акции ny2027
+//
+// Пользователь собирает конфигурацию виртуальной инфраструктуры под один из пяти
+// production-сценариев, укладываясь в бюджет в кредитах и минимальные требования сценария.
+// Каталог компонентов, порядок заданий и активация акции — на стороне клиента; сервис
+// только хранит факт прохождения и проверяет присланную конфигурацию.
+service Ny2027Service {
+  // Получить выполненные задания
+  //
+  // Возвращает типы заданий, которые аккаунт уже прошёл в рамках акции. Хранится только
+  // финальный факт прохождения без деталей собранной конфигурации и количества попыток.
+  rpc getExerciseCompleted (GetExerciseCompletedRequest) returns (GetExerciseCompletedResponse) {
+    option (google.api.http) = {
+      get: "/v1/promo/ny2027/exercise-completed"
+    };
+  }
+
+  // Отправить конфигурацию задания на проверку
+  //
+  // Проверяет присланную конфигурацию на соответствие бюджету и минимальным требованиям
+  // выбранного сценария. Для части сценариев дополнительно выполняется случайная проверка
+  // на устойчивость к DDoS-атаке. Количество попыток не ограничено.
+  rpc submitExercise (SubmitExerciseRequest) returns (SubmitExerciseResponse) {
+    option (google.api.http) = {
+      post: "/v1/promo/ny2027/submit-exercise"
+      body: "*"
+    };
+  }
+}
+
+message GetExerciseCompletedRequest {}
+
+message GetExerciseCompletedResponse {
+  repeated Exercise exercise = 1;
+  message Exercise {
+    ExerciseType exercise_type = 1;
+  }
+}
+
+message SubmitExerciseRequest {
+  // Тип задания.
+  ExerciseType exercise_type = 1;
+  // Сервер (compute) (необязательное поле).
+  ServerComputeConfig server_compute = 2;
+  // Сетевые диски (SSD) (необязательное поле).
+  NetworkDiskConfig network_disk = 3;
+  // S3 (необязательное поле).
+  S3Config s3 = 4;
+  // DBaaS (необязательное поле).
+  DBaaSConfig dbaas = 5;
+  // Канал связи (необязательное поле).
+  BandwidthConfig bandwidth = 6;
+  // CDN (необязательное поле).
+  CDNConfig cdn = 7;
+  // IPv6 (необязательное поле).
+  IPv6Config ipv6 = 8;
+  // Бэкапы (необязательное поле).
+  BackupsConfig backups = 9;
+  // VPN/Приватная сеть (необязательное поле).
+  VPNConfig vpn = 10;
+}
+
+message ServerComputeConfig {
+  uint32 cpu_cores = 1;
+  uint32 ram_gb = 2;
+}
+
+message NetworkDiskConfig {
+  uint32 volume_gb = 1;
+}
+
+message S3Config {
+  uint32 volume_gb = 1;
+}
+
+message DBaaSConfig {
+  DBaaSSize size = 1;
+}
+
+message BandwidthConfig {
+  uint32 bandwidth_mbps = 1;
+}
+
+message CDNConfig {
+  uint32 bandwidth_mbps = 1;
+}
+
+message IPv6Config {}
+
+message BackupsConfig {}
+
+message VPNConfig {}
+
+message SubmitExerciseResponse {
+  oneof result {
+    // Член oneof result: конфигурация прошла проверку, задание засчитано.
+    Success success = 1;
+    // Член oneof result: конфигурация не прошла проверку — список несоответствующих компонентов.
+    ComponentErrors component_errors = 2;
+    // Член oneof result: обычная проверка пройдена, но конфигурация не выдержала DDoS-атаку;
+    // задание не засчитано, попытку можно повторить.
+    Ddos ddos = 3;
+  }
+
+  message Success {}
+
+  message ComponentErrors {
+    repeated ComponentError errors = 1;
+  }
+
+  message ComponentError {
+    ComponentType component_type = 1;
+    string message = 2;
+  }
+
+  message Ddos {
+    string message = 1;
+  }
+}
+
+enum ExerciseType {
+  SCENARIO_TYPE_UNSPECIFIED = 0;
+  SCENARIO_TYPE_ONLINE_LEARNING_PLATFORM = 1;   // Платформа онлайн-обучения
+  SCENARIO_TYPE_ECOMMERCE_SALE = 2;             // Распродажа: highload-магазин
+  SCENARIO_TYPE_INTERNAL_PORTAL_CRM = 3;        // Внутренний портал / CRM
+  SCENARIO_TYPE_VIDEO_STREAMING_SERVICE = 4;    // Видеостриминговый сервис
+  SCENARIO_TYPE_MOBILE_APP_BACKEND = 5;         // Backend мобильного приложения
+}
+
+enum ComponentType {
+  COMPONENT_TYPE_UNSPECIFIED = 0;
+  COMPONENT_TYPE_SERVER_COMPUTE = 1;          // Сервер (compute)
+  COMPONENT_TYPE_NETWORK_DISK_SSD = 2;        // Сетевые диски (SSD)
+  COMPONENT_TYPE_S3 = 3;                      // S3
+  COMPONENT_TYPE_DBAAS = 4;                   // DBaaS
+  COMPONENT_TYPE_BANDWIDTH = 5;               // Канал связи
+  COMPONENT_TYPE_CDN = 6;                     // CDN
+  COMPONENT_TYPE_IPV6 = 7;                    // IPv6
+  COMPONENT_TYPE_BACKUPS = 8;                 // Бэкапы
+  COMPONENT_TYPE_VPN_PRIVATE_NETWORK = 9;     // VPN/Приватная сеть
+}
+
+enum DBaaSSize {
+  DBAAS_SIZE_UNSPECIFIED = 0;
+  DBAAS_SIZE_SMALL = 1;
+  DBAAS_SIZE_MEDIUM = 2;
+  DBAAS_SIZE_LARGE = 3;
+}
